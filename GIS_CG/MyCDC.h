@@ -14,8 +14,10 @@ public:
 	void drawCircleMP(int x,int y,int r);
 	void drawCircleBresenham(int x, int y, int r);
 
-	void drawEllipseMP(int left, int top, int right, int bottom);
-	void drawEllipseMidPoint(int xCenter, int yCenter, int a, int b);
+	void drawEllipseMP_1(int left, int top, int right, int bottom);
+	void drawEllipseMP_2(int xCenter, int yCenter, int a, int b);
+	void drawEllipse_XYAB(int x, int y, int a, int b);
+	void drawEllipse_LTRB(int left, int top, int right, int bottom);
 
 	void setColor(COLORREF c);
 	void setColor(uc r,uc g,uc b);

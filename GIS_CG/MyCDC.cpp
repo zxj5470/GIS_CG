@@ -126,8 +126,8 @@ void MyCDC::drawCircleBresenham(int cx, int cy, int r) {
 	}
 }
 
-void MyCDC::drawEllipseMP(int left, int top, int right, int bottom) {
-	/*float d;
+void MyCDC::drawEllipseMP_1(int left, int top, int right, int bottom) {
+	float d;
 	int cx = (left + right) / 2;
 	int cy = (top + bottom) / 2;
 	int a = abs(left - right) / 2;
@@ -146,58 +146,65 @@ void MyCDC::drawEllipseMP(int left, int top, int right, int bottom) {
 		x++;
 	}
 	d = toFixed(b*b*(x + 0.5)*(x + 0.5) + a*a*(y - 1)*(y - 1) - a*a*b*b);
-	while (y >0 ) {
-		draw4Points(cx,cy, x, y);
+	while (y >=0 ) {
+		draw4Points(cx, cy, x, y);
+		y--;
 		if (d < 0) {
-			d = b*b*(2 * x + 2) + a*a*(-2 * y + 3);
+			d += b*b*(2 * x + 2) + a*a*(-2 * y + 3);
 			x++; 
 		}
 		else {
 			d += a*a*(-2 * y + 3);
 		}
-		y--;
-	}*/
+	}
 }
 
-void MyCDC::drawEllipseMidPoint(int xCenter, int yCenter, int a, int b) {
-	int aSQ = a * a;
-	int bSQ = b * b;
-	int twoRx2 = 2 * aSQ;
-	int twoRy2 = 2 * bSQ;
+void MyCDC::drawEllipseMP_2(int xCenter, int yCenter, int a, int b) {
+	int SQ_a = a * a;
+	int SQ_b = b * b;
+	int twox2 = 2 * SQ_a;
+	int twoy2 = 2 * SQ_b;
 	int p;
 	int x = 0;
 	int y = b;
 	int px = 0;
-	int py = twoRx2 * y;
+	int py = twox2 * y;
 	draw4Points(xCenter, yCenter, x, y);
-	p = toFixed(bSQ - (aSQ * b) + (0.25 * aSQ));
+	p = toFixed(SQ_b - (SQ_a * b) + (0.25 * SQ_a));
 	while (px < py) {
 		x++;
-		px += twoRy2;
+		px += twoy2;
 		if (p < 0)
-			p += bSQ + px;
+			p += SQ_b + px;
 		else {
 			y--;
-			py -= twoRx2;
-			p += bSQ + px - py;
+			py -= twox2;
+			p += SQ_b + px - py;
 		}
 		draw4Points(xCenter, yCenter, x, y);
 	}
-	p = toFixed(bSQ * (x + 0.5) * (x + 0.5) + aSQ * (y - 1) * (y - 1) - aSQ * bSQ);
+	p = toFixed(SQ_b * (x + 0.5) * (x + 0.5) + SQ_a * (y - 1) * (y - 1) - SQ_a * SQ_b);
 	while (y > 0) {
 		y--;
-		py -= twoRx2;
+		py -= twox2;
 		if (p > 0)
-			p += aSQ - py;
+			p += SQ_a - py;
 		else {
 			x++;
-			px += twoRy2;
-			p += aSQ - py + px;
+			px += twoy2;
+			p += SQ_a - py + px;
 		}
 		draw4Points(xCenter, yCenter, x, y);
 	}
 }
 
+void MyCDC::drawEllipse_XYAB(int x, int y, int a, int b) {
+	drawEllipseMP_2(x, y, a, b);
+}
+
+void MyCDC::drawEllipse_LTRB(int left, int top, int right, int bottom) {
+	drawEllipseMP_1(left, top, right, bottom);
+}
 
 void MyCDC::setColor(COLORREF c) {
 	this->c = c;
@@ -208,6 +215,8 @@ void MyCDC::setColor(uc r, uc g, uc b) {
 	setColor(RGB(r, g, b));
 }
 
+
+//private functions
 void MyCDC::draw8Points(int cx, int cy, int x, int y) {
 	SetPixel(cx + x, cy + y, c);
 	SetPixel(cx - x, cy + y, c);

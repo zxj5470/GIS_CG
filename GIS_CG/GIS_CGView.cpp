@@ -69,6 +69,9 @@ void CGIS_CGView::OnDraw(CDC* pDC)
 	g.drawCircleBresenham(100, 100, 30);
 	g.setColor(200, 10, 10);
 	g.drawLineDDA(10, 10, 200, 200);
+	g.setColor(100, 233, 10);
+	g.drawEllipseMP_2(100, 100, 100, 100);
+	g.drawEllipseMP_1(100, 100, 300, 250);
 	// TODO: 在此处为本机数据添加绘制代码
 }
 

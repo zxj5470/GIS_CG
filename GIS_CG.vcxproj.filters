@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="GIS_CG.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -83,5 +80,8 @@
     <Image Include="res\Toolbar.bmp">
       <Filter>资源文件</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.md" />
   </ItemGroup>
 </Project>

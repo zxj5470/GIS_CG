@@ -58,7 +58,7 @@ void CGIS_CGView::OnDraw(CDC* pDC)
 		return;
 
 	////add console to "debug"
-	//AllocConsole();                                          // 开辟控制台
+	//AllocConsole();                          // 开辟控制台
 	//SetConsoleTitle(_T("Debug Title"));      // 设置控制台窗口标题
 	//FILE* pf;
 	//freopen_s(&pf, "CONOUT$", "w", stdout);

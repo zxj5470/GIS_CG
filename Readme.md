@@ -1,4 +1,5 @@
 ﻿# GIS CG 计算机图形学
+All functions in class MyCDC.h/MyCDC.cpp
 ````
 class MyCDC 
 ````

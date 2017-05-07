@@ -183,9 +183,6 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.md" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="GIS_CG.h" />
     <ClInclude Include="GIS_CGDoc.h" />
     <ClInclude Include="GIS_CGView.h" />
@@ -212,6 +209,7 @@
     <ResourceCompile Include="GIS_CG.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Readme.md" />
     <None Include="res\GIS_CG.rc2" />
   </ItemGroup>
   <ItemGroup>

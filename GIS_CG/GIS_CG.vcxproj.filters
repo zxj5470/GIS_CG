@@ -69,6 +69,7 @@
     <None Include="res\GIS_CG.rc2">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="..\Readme.md" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\GIS_CGDoc.ico">
@@ -80,8 +81,5 @@
     <Image Include="res\Toolbar.bmp">
       <Filter>资源文件</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="ReadMe.md" />
   </ItemGroup>
 </Project>

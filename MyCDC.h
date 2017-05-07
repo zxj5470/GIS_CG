@@ -20,10 +20,6 @@ public:
 	void setColor(COLORREF c);
 	void setColor(uc r,uc g,uc b);
 
-	
-
-	
-
 private:
 
 	void draw8Points(int cx, int cy, int x, int y);

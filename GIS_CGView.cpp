@@ -1,10 +1,10 @@
-
-// GIS_CGView.cpp : CGIS_CGView ÀàµÄÊµÏÖ
+ï»¿
+// GIS_CGView.cpp : CGIS_CGView ç±»çš„å®ç°
 //
 
 #include "stdafx.h"
-// SHARED_HANDLERS ¿ÉÒÔÔÚÊµÏÖÔ¤ÀÀ¡¢ËõÂÔÍ¼ºÍËÑË÷É¸Ñ¡Æ÷¾ä±úµÄ
-// ATL ÏîÄ¿ÖĞ½øĞĞ¶¨Òå£¬²¢ÔÊĞíÓë¸ÃÏîÄ¿¹²ÏíÎÄµµ´úÂë¡£
+// SHARED_HANDLERS å¯ä»¥åœ¨å®ç°é¢„è§ˆã€ç¼©ç•¥å›¾å’Œæœç´¢ç­›é€‰å™¨å¥æŸ„çš„
+// ATL é¡¹ç›®ä¸­è¿›è¡Œå®šä¹‰ï¼Œå¹¶å…è®¸ä¸è¯¥é¡¹ç›®å…±äº«æ–‡æ¡£ä»£ç ã€‚
 #ifndef SHARED_HANDLERS
 #include "GIS_CG.h"
 #endif
@@ -22,17 +22,17 @@
 IMPLEMENT_DYNCREATE(CGIS_CGView, CView)
 
 BEGIN_MESSAGE_MAP(CGIS_CGView, CView)
-	// ±ê×¼´òÓ¡ÃüÁî
+	// æ ‡å‡†æ‰“å°å‘½ä»¤
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
 END_MESSAGE_MAP()
 
-// CGIS_CGView ¹¹Ôì/Îö¹¹
+// CGIS_CGView æ„é€ /ææ„
 
 CGIS_CGView::CGIS_CGView()
 {
-	// TODO: ÔÚ´Ë´¦Ìí¼Ó¹¹Ôì´úÂë
+	// TODO: åœ¨æ­¤å¤„æ·»åŠ æ„é€ ä»£ç 
 
 }
 
@@ -42,13 +42,13 @@ CGIS_CGView::~CGIS_CGView()
 
 BOOL CGIS_CGView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: ÔÚ´Ë´¦Í¨¹ıĞŞ¸Ä
-	//  CREATESTRUCT cs À´ĞŞ¸Ä´°¿ÚÀà»òÑùÊ½
+	// TODO: åœ¨æ­¤å¤„é€šè¿‡ä¿®æ”¹
+	//  CREATESTRUCT cs æ¥ä¿®æ”¹çª—å£ç±»æˆ–æ ·å¼
 
 	return CView::PreCreateWindow(cs);
 }
 
-// CGIS_CGView »æÖÆ
+// CGIS_CGView ç»˜åˆ¶
 
 void CGIS_CGView::OnDraw(CDC* pDC)
 {
@@ -58,8 +58,8 @@ void CGIS_CGView::OnDraw(CDC* pDC)
 		return;
 
 	////add console to "debug"
-	//AllocConsole();                                          // ¿ª±Ù¿ØÖÆÌ¨
-	//SetConsoleTitle(_T("Debug Title"));      // ÉèÖÃ¿ØÖÆÌ¨´°¿Ú±êÌâ
+	//AllocConsole();                                          // å¼€è¾Ÿæ§åˆ¶å°
+	//SetConsoleTitle(_T("Debug Title"));      // è®¾ç½®æ§åˆ¶å°çª—å£æ ‡é¢˜
 	//FILE* pf;
 	//freopen_s(&pf, "CONOUT$", "w", stdout);
 	
@@ -69,30 +69,29 @@ void CGIS_CGView::OnDraw(CDC* pDC)
 	g.drawCircleBresenham(100, 100, 30);
 	g.setColor(200, 10, 10);
 	g.drawLineDDA(10, 10, 200, 200);
-	// TODO: ÔÚ´Ë´¦Îª±¾»úÊı¾İÌí¼Ó»æÖÆ´úÂë
+	// TODO: åœ¨æ­¤å¤„ä¸ºæœ¬æœºæ•°æ®æ·»åŠ ç»˜åˆ¶ä»£ç 
 }
 
 
-// CGIS_CGView ´òÓ¡
-
+// CGIS_CGView æ‰“å°
 BOOL CGIS_CGView::OnPreparePrinting(CPrintInfo* pInfo)
 {
-	// Ä¬ÈÏ×¼±¸
+	// é»˜è®¤å‡†å¤‡
 	return DoPreparePrinting(pInfo);
 }
 
 void CGIS_CGView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-	// TODO: Ìí¼Ó¶îÍâµÄ´òÓ¡Ç°½øĞĞµÄ³õÊ¼»¯¹ı³Ì
+	// TODO: æ·»åŠ é¢å¤–çš„æ‰“å°å‰è¿›è¡Œçš„åˆå§‹åŒ–è¿‡ç¨‹
 }
 
 void CGIS_CGView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-	// TODO: Ìí¼Ó´òÓ¡ºó½øĞĞµÄÇåÀí¹ı³Ì
+	// TODO: æ·»åŠ æ‰“å°åè¿›è¡Œçš„æ¸…ç†è¿‡ç¨‹
 }
 
 
-// CGIS_CGView Õï¶Ï
+// CGIS_CGView è¯Šæ–­
 
 #ifdef _DEBUG
 void CGIS_CGView::AssertValid() const
@@ -105,7 +104,7 @@ void CGIS_CGView::Dump(CDumpContext& dc) const
 	CView::Dump(dc);
 }
 
-CGIS_CGDoc* CGIS_CGView::GetDocument() const // ·Çµ÷ÊÔ°æ±¾ÊÇÄÚÁªµÄ
+CGIS_CGDoc* CGIS_CGView::GetDocument() const // éè°ƒè¯•ç‰ˆæœ¬æ˜¯å†…è”çš„
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CGIS_CGDoc)));
 	return (CGIS_CGDoc*)m_pDocument;
@@ -113,4 +112,4 @@ CGIS_CGDoc* CGIS_CGView::GetDocument() const // ·Çµ÷ÊÔ°æ±¾ÊÇÄÚÁªµÄ
 #endif //_DEBUG
 
 
-// CGIS_CGView ÏûÏ¢´¦Àí³ÌĞò
+// CGIS_CGView æ¶ˆæ¯å¤„ç†ç¨‹åº

@@ -1,33 +1,32 @@
-
-// GIS_CGView.h : CGIS_CGView ÀàµÄ½Ó¿Ú
+ï»¿
+// GIS_CGView.h : CGIS_CGView ç±»çš„æ¥å£
 //
 
 #pragma once
 
-
 class CGIS_CGView : public CView
 {
-protected: // ½ö´ÓĞòÁĞ»¯´´½¨
+protected: // ä»…ä»åºåˆ—åŒ–åˆ›å»º
 	CGIS_CGView();
 	DECLARE_DYNCREATE(CGIS_CGView)
 
-// ÌØĞÔ
+// ç‰¹æ€§
 public:
 	CGIS_CGDoc* GetDocument() const;
 
-// ²Ù×÷
+// æ“ä½œ
 public:
 
-// ÖØĞ´
+// é‡å†™
 public:
-	virtual void OnDraw(CDC* pDC);  // ÖØĞ´ÒÔ»æÖÆ¸ÃÊÓÍ¼
+	virtual void OnDraw(CDC* pDC);  // é‡å†™ä»¥ç»˜åˆ¶è¯¥è§†å›¾
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
 
-// ÊµÏÖ
+// å®ç°
 public:
 	virtual ~CGIS_CGView();
 #ifdef _DEBUG
@@ -37,12 +36,12 @@ public:
 
 protected:
 
-// Éú³ÉµÄÏûÏ¢Ó³Éäº¯Êı
+// ç”Ÿæˆçš„æ¶ˆæ¯æ˜ å°„å‡½æ•°
 protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-#ifndef _DEBUG  // GIS_CGView.cpp ÖĞµÄµ÷ÊÔ°æ±¾
+#ifndef _DEBUG  // GIS_CGView.cpp ä¸­çš„è°ƒè¯•ç‰ˆæœ¬
 inline CGIS_CGDoc* CGIS_CGView::GetDocument() const
    { return reinterpret_cast<CGIS_CGDoc*>(m_pDocument); }
 #endif

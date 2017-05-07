@@ -1,10 +1,10 @@
-
-// GIS_CGDoc.cpp : CGIS_CGDoc ÀàµÄÊµÏÖ
+ï»¿
+// GIS_CGDoc.cpp : CGIS_CGDoc ç±»çš„å®ç°
 //
 
 #include "stdafx.h"
-// SHARED_HANDLERS ¿ÉÒÔÔÚÊµÏÖÔ¤ÀÀ¡¢ËõÂÔÍ¼ºÍËÑË÷É¸Ñ¡Æ÷¾ä±úµÄ
-// ATL ÏîÄ¿ÖĞ½øĞĞ¶¨Òå£¬²¢ÔÊĞíÓë¸ÃÏîÄ¿¹²ÏíÎÄµµ´úÂë¡£
+// SHARED_HANDLERS å¯ä»¥åœ¨å®ç°é¢„è§ˆã€ç¼©ç•¥å›¾å’Œæœç´¢ç­›é€‰å™¨å¥æŸ„çš„
+// ATL é¡¹ç›®ä¸­è¿›è¡Œå®šä¹‰ï¼Œå¹¶å…è®¸ä¸è¯¥é¡¹ç›®å…±äº«æ–‡æ¡£ä»£ç ã€‚
 #ifndef SHARED_HANDLERS
 #include "GIS_CG.h"
 #endif
@@ -25,11 +25,11 @@ BEGIN_MESSAGE_MAP(CGIS_CGDoc, CDocument)
 END_MESSAGE_MAP()
 
 
-// CGIS_CGDoc ¹¹Ôì/Îö¹¹
+// CGIS_CGDoc æ„é€ /ææ„
 
 CGIS_CGDoc::CGIS_CGDoc()
 {
-	// TODO: ÔÚ´ËÌí¼ÓÒ»´ÎĞÔ¹¹Ôì´úÂë
+	// TODO: åœ¨æ­¤æ·»åŠ ä¸€æ¬¡æ€§æ„é€ ä»£ç 
 
 }
 
@@ -42,8 +42,8 @@ BOOL CGIS_CGDoc::OnNewDocument()
 	if (!CDocument::OnNewDocument())
 		return FALSE;
 
-	// TODO: ÔÚ´ËÌí¼ÓÖØĞÂ³õÊ¼»¯´úÂë
-	// (SDI ÎÄµµ½«ÖØÓÃ¸ÃÎÄµµ)
+	// TODO: åœ¨æ­¤æ·»åŠ é‡æ–°åˆå§‹åŒ–ä»£ç 
+	// (SDI æ–‡æ¡£å°†é‡ç”¨è¯¥æ–‡æ¡£)
 
 	return TRUE;
 }
@@ -51,26 +51,26 @@ BOOL CGIS_CGDoc::OnNewDocument()
 
 
 
-// CGIS_CGDoc ĞòÁĞ»¯
+// CGIS_CGDoc åºåˆ—åŒ–
 
 void CGIS_CGDoc::Serialize(CArchive& ar)
 {
 	if (ar.IsStoring())
 	{
-		// TODO: ÔÚ´ËÌí¼Ó´æ´¢´úÂë
+		// TODO: åœ¨æ­¤æ·»åŠ å­˜å‚¨ä»£ç 
 	}
 	else
 	{
-		// TODO: ÔÚ´ËÌí¼Ó¼ÓÔØ´úÂë
+		// TODO: åœ¨æ­¤æ·»åŠ åŠ è½½ä»£ç 
 	}
 }
 
 #ifdef SHARED_HANDLERS
 
-// ËõÂÔÍ¼µÄÖ§³Ö
+// ç¼©ç•¥å›¾çš„æ”¯æŒ
 void CGIS_CGDoc::OnDrawThumbnail(CDC& dc, LPRECT lprcBounds)
 {
-	// ĞŞ¸Ä´Ë´úÂëÒÔ»æÖÆÎÄµµÊı¾İ
+	// ä¿®æ”¹æ­¤ä»£ç ä»¥ç»˜åˆ¶æ–‡æ¡£æ•°æ®
 	dc.FillSolidRect(lprcBounds, RGB(255, 255, 255));
 
 	CString strText = _T("TODO: implement thumbnail drawing here");
@@ -88,14 +88,14 @@ void CGIS_CGDoc::OnDrawThumbnail(CDC& dc, LPRECT lprcBounds)
 	dc.SelectObject(pOldFont);
 }
 
-// ËÑË÷´¦Àí³ÌĞòµÄÖ§³Ö
+// æœç´¢å¤„ç†ç¨‹åºçš„æ”¯æŒ
 void CGIS_CGDoc::InitializeSearchContent()
 {
 	CString strSearchContent;
-	// ´ÓÎÄµµÊı¾İÉèÖÃËÑË÷ÄÚÈİ¡£
-	// ÄÚÈİ²¿·ÖÓ¦ÓÉ¡°;¡±·Ö¸ô
+	// ä»æ–‡æ¡£æ•°æ®è®¾ç½®æœç´¢å†…å®¹ã€‚
+	// å†…å®¹éƒ¨åˆ†åº”ç”±â€œ;â€åˆ†éš”
 
-	// ÀıÈç:     strSearchContent = _T("point;rectangle;circle;ole object;")£»
+	// ä¾‹å¦‚:     strSearchContent = _T("point;rectangle;circle;ole object;")ï¼›
 	SetSearchContent(strSearchContent);
 }
 
@@ -119,7 +119,7 @@ void CGIS_CGDoc::SetSearchContent(const CString& value)
 
 #endif // SHARED_HANDLERS
 
-// CGIS_CGDoc Õï¶Ï
+// CGIS_CGDoc è¯Šæ–­
 
 #ifdef _DEBUG
 void CGIS_CGDoc::AssertValid() const
@@ -134,4 +134,4 @@ void CGIS_CGDoc::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 
-// CGIS_CGDoc ÃüÁî
+// CGIS_CGDoc å‘½ä»¤

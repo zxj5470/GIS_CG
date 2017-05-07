@@ -1,13 +1,13 @@
-//{{NO_DEPENDENCIES}}
-// иЗЁи╣д Microsoft Visual C++ ╟Э╨╛нд╪Ч║ё
-// си GIS_CG.rc й╧сц
+О╩©//{{NO_DEPENDENCIES}}
+// Г■÷Ф┬░Г └ Microsoft Visual C++ Е▄┘Е░╚Ф√┤Д╩╤Ц─┌
+// Г■╠ GIS_CG.rc Д╫©Г■╗
 //
 #define IDD_ABOUTBOX				100
 #define IDP_OLE_INIT_FAILED			100
 #define IDR_MAINFRAME				128
 #define IDR_GIS_CGTYPE				130
 
-// пб╤тоС╣добр╩вИд╛хож╣
+// Ф√╟Е╞╧Х╠║Г └Д╦▀Д╦─Г╩└И╩≤Х╝╓Е─╪
 //
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS

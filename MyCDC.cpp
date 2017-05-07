@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "MyCDC.h"
 
 
@@ -10,7 +10,7 @@ MyCDC::MyCDC() {
 MyCDC::~MyCDC() {
 }
 
-//µ×²ãÊµÏÖ
+//åº•å±‚å®žçŽ°
 void MyCDC::drawLineDDA(int x1, int y1, int x2, int y2) {
 	int dx, dy, eps1;
 	float x, y, xi, yi;

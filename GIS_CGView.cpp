@@ -11,7 +11,7 @@
 
 #include "GIS_CGDoc.h"
 #include "GIS_CGView.h"
-
+#include "MyCDC.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -50,13 +50,14 @@ BOOL CGIS_CGView::PreCreateWindow(CREATESTRUCT& cs)
 
 // CGIS_CGView 绘制
 
-void CGIS_CGView::OnDraw(CDC* /*pDC*/)
+void CGIS_CGView::OnDraw(CDC* pDC)
 {
 	CGIS_CGDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
-
+	MyCDC &g = static_cast<MyCDC&>(*pDC);
+	g.drawCircleBresenham(100, 100, 30);
 	// TODO: 在此处为本机数据添加绘制代码
 }
 

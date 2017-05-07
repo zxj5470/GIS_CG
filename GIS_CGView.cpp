@@ -56,8 +56,19 @@ void CGIS_CGView::OnDraw(CDC* pDC)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
+
+	////add console to "debug"
+	//AllocConsole();                                          // 开辟控制台
+	//SetConsoleTitle(_T("Debug Title"));      // 设置控制台窗口标题
+	//FILE* pf;
+	//freopen_s(&pf, "CONOUT$", "w", stdout);
+	
+
 	MyCDC &g = static_cast<MyCDC&>(*pDC);
+
 	g.drawCircleBresenham(100, 100, 30);
+	g.setColor(200, 10, 10);
+	g.drawLineDDA(10, 10, 200, 200);
 	// TODO: 在此处为本机数据添加绘制代码
 }
 

@@ -18,7 +18,7 @@ struct Point {
 * @param x,y 点C
 * @param xa,ya 点A坐标
 * @param xb,yb 点B坐标
-* @return
+* @return distance
 */
 double distanceVector(double x, double y, double xa, double ya, double xb, double yb) {
 	//A(xa,ya) B(xb,yb) C(x,y);

@@ -39,10 +39,12 @@ double distanceVector(double x, double y, double xa, double ya, double xb, doubl
 	}
 }
 
+//重载
 double distanceVector(Point C, Point A, Point B) {
 	return distanceVector(C.x, C.y, A.x, A.y, B.x, B.y);
 }
 
+//前面使用向量法，如果在点之间则使用海伦Heron公式
 double distanceHeron(double x, double y, double xa, double ya, double xb, double yb) {
 	double ACAB = (x - xa) * (xb - xa) + (y - ya) * (yb - ya);
 	if (ACAB <= 0)return sqrt((x - xa) * (x - xa) + (y - ya) * (y - ya));//A为钝角 return |AC|
@@ -64,6 +66,7 @@ double distanceHeron(double x, double y, double xa, double ya, double xb, double
 double distanceHeron(Point C, Point A, Point B) {
 	return distanceHeron(C.x, C.y, A.x, A.y, B.x, B.y);
 }
+
 void test(double x, double y, double x1, double y1, double x2, double y2) {
 	DWORD k = ::GetTickCount(); //获取毫秒数
 	int counts = 1000000;

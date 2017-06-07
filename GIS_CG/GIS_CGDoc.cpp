@@ -65,6 +65,7 @@ void CGIS_CGDoc::DDALine(CClientDC * DCPoint) {
 
 void CGIS_CGDoc::SeedFill(CClientDC * pDC, CPoint seedpoint) {
 	int savex, xleft, xright, pflag, x, y, num; CPoint stack_ptr[200];//堆栈 
+	int tx;
 	pDC->SetROP2(R2_COPYPEN); //绘图方法为直接画 
 	num = 0; //num 为堆栈中的种子数 
 	stack_ptr[num++] = seedpoint;
@@ -74,8 +75,13 @@ void CGIS_CGDoc::SeedFill(CClientDC * pDC, CPoint seedpoint) {
 		savex = x;     x++;
 		while (pDC->GetPixel(x, y) != RGB(0, 0, 0))//向右填充，直到边界
 		{
-			pDC->SetPixel(x++, y, RGB(0, 0, 0));
+			x++;
 		};
+		tx = savex;
+		while (tx != x) {
+			pDC->SetPixel(tx++, y, RGB(0, 0, 0));//向右填充，直到边界
+		}
+
 		xright = x - 1;   x = savex - 1;
 		while (pDC->GetPixel(x, y) != RGB(0, 0, 0))//向左填充，直到边界
 		{

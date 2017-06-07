@@ -149,28 +149,25 @@ void CGIS_CGView::OnLButtonDown(UINT nFlags, CPoint point) {
 			mPointOld = point;
 			mPointOld1 = point; //记录第一点 
 			PressNum++;
-			SetCapture();
 		}
 		else {
-			ht.MoveTo(mPointOrign);//擦除橡皮筋 
-			ht.LineTo(point);
-			pDoc->group[0] = mPointOrign;//借助 DDA 直线函数画边界
-			pDoc->group[1]=point; 
-			g.drawLineDDA(pDoc->group[0].x, pDoc->group[0].y, pDoc->group[1].x, pDoc->group[1].y);
+			g.drawLine2PointDDA(mPointOrign, point);
+			//g.drawLine2PointDDA(mPointOrign, pDoc->group[1]);
 			mPointOrign = point;
 			mPointOld = point;
 			PressNum++;
 		}
+
 	}
 	if (MenuID == 21) { // 确定种子点，填充 
 		pDoc->SeedFill(&ht, point);
 		PressNum = 0; MenuID = 20;//设置决定顶点操作方式
 	}
 	if (MenuID == 22) { // 边缘填充选顶点 
-		pDoc->group[PressNum++] = point; pDoc->PointNum++;
+		pDoc->group[PressNum++] = point; 
+		pDoc->PointNum++;
 		mPointOrign = point;
 		mPointOld = point;
-		SetCapture();
 	}
 
 	switch (MenuID) {
@@ -180,12 +177,11 @@ void CGIS_CGView::OnLButtonDown(UINT nFlags, CPoint point) {
 				mPointOld = point;
 				mPointOld1 = point; //记录第一点 
 				PressNum++;
-				SetCapture();
 			}
 			else {
-				pDoc->group[0] = mPointOrign;//借助 DDA 直线函数画边界
+				pDoc->group[0] = mPointOrign;
 				pDoc->group[1] = point;
-				g.drawLineDDA(pDoc->group[0].x, pDoc->group[0].y, pDoc->group[1].x, pDoc->group[1].y);
+				g.drawLine2PointDDA(pDoc->group[0], pDoc->group[1]);
 				mPointOrign = point;
 				mPointOld = point;
 				PressNum = 0;
@@ -194,8 +190,7 @@ void CGIS_CGView::OnLButtonDown(UINT nFlags, CPoint point) {
 		default:
 			break;
 	}
-
-	ht.ReleaseOutputDC();
+	ReleaseDC(dc);
 	CView::OnLButtonDown(nFlags, point);
 }
 
@@ -209,18 +204,18 @@ void CGIS_CGView::OnMouseMove(UINT nFlags, CPoint point) {
 	CClientDC pDC(this);
 	CDC *dc = GetDC();
 	MyCDC &g = static_cast<MyCDC&>(*dc);
+	OnPrepareDC(dc);
 	pDC.SetROP2(R2_NOT);
 	g.SetROP2(R2_NOT);
 	if ((MenuID == 1 || MenuID == 11 || MenuID == 15 || MenuID == 20 || MenuID == 22||MenuID==DRAW_LINE_DDA_MODE)
 		&& PressNum>0) {
 		if (mPointOld != point) {
-			pDC.MoveTo(mPointOrign);
-			pDC.LineTo(mPointOld);
+			g.drawLine2PointDDA(mPointOrign, mPointOld);
 			g.drawLine2PointDDA(mPointOrign, point);
 			mPointOld = point;
 		}
 	}
-	ReleaseDC(&pDC);
+	ReleaseDC(dc);
 	CView::OnMouseMove(nFlags, point);
 }
 
@@ -232,7 +227,6 @@ void CGIS_CGView::OnRButtonDown(UINT nFlags, CPoint point) {
 	CDC *dc = GetDC();
 	MyCDC &g = static_cast<MyCDC&>(*dc);
 	g.setColor(0, 0, 0);
-	OnPrepareDC(&ht);
 	if (MenuID == 20 && PressNum>0) { //  种子填充 
 		ht.MoveTo(mPointOrign);//擦除橡皮筋
 		ht.LineTo(point);
@@ -240,7 +234,6 @@ void CGIS_CGView::OnRButtonDown(UINT nFlags, CPoint point) {
 		pDoc->group[1] = mPointOrign;
 
 		g.drawLineMP(pDoc->group[0].x, pDoc->group[0].y, pDoc->group[1].x, pDoc->group[1].y);
-		
 		PressNum = 0; MenuID = 21;//改变操作方式为种子点选取
 		ReleaseCapture();
 	}
@@ -255,9 +248,11 @@ void CGIS_CGView::OnRButtonDown(UINT nFlags, CPoint point) {
 		pDoc->PointNum = 0; 
 		ReleaseCapture();
 	}
-	
-	g.ReleaseOutputDC();
-	ht.ReleaseOutputDC();
+	if (MenuID >= 100) {
+		MenuID = 0;
+	}
+
+	ReleaseDC(dc);
 	CView::OnRButtonDown(nFlags, point);
 }
 

@@ -29,6 +29,13 @@ public:
 // 实现
 public:
 	virtual ~CGIS_CGDoc();
+	void DDALine(CClientDC *DCPoint);
+	void SeedFill(CClientDC *pDC, CPoint seedpoint);
+	void EdgeFill(CClientDC *pDC);
+
+	CPoint group[100];
+	int PointNum;
+
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;

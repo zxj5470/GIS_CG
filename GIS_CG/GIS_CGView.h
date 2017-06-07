@@ -9,10 +9,12 @@ class CGIS_CGView : public CView
 protected: // 仅从序列化创建
 	CGIS_CGView();
 	DECLARE_DYNCREATE(CGIS_CGView)
-
 // 特性
 public:
 	CGIS_CGDoc* GetDocument() const;
+protected: // create from serialization only 
+	int MenuID, PressNum, SaveNumber;
+	CPoint mPointOrign, mPointOld, mPointOld1;
 
 // 操作
 public:
@@ -39,6 +41,18 @@ protected:
 // 生成的消息映射函数
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnFill();
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnEdgefill();
+	afx_msg void OnDrawlinedda();
+	afx_msg void OnDrawlinemp();
+	afx_msg void OnDrawcircledda();
+	afx_msg void OnDrawcirclemp();
+	afx_msg void OnDrawcirclebre();
+	afx_msg void OnDrawellipse();
 };
 
 #ifndef _DEBUG  // GIS_CGView.cpp 中的调试版本

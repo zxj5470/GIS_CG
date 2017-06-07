@@ -184,6 +184,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CG_algorithms.h" />
+    <ClInclude Include="consts.h" />
     <ClInclude Include="GIS_CG.h" />
     <ClInclude Include="GIS_CGDoc.h" />
     <ClInclude Include="GIS_CGView.h" />

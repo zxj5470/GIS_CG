@@ -1,13 +1,15 @@
 ﻿#include "stdafx.h"
 #include "MyCDC.h"
 
-
 MyCDC::MyCDC() {
-	c = RGB(100, 100, 100);
+	c = RGB(0, 0, 0);
 }
 
-
 MyCDC::~MyCDC() {
+}
+
+void MyCDC::drawLine2PointDDA(CPoint p1, CPoint p2) {
+	drawLineDDA(p1.x, p1.y, p2.x, p2.y);
 }
 
 //底层实现

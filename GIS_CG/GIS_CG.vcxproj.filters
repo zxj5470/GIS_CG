@@ -45,6 +45,9 @@
     <ClInclude Include="stdc++.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="consts.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GIS_CG.cpp">

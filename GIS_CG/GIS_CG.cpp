@@ -157,6 +157,8 @@ protected:
 // 实现
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnEdgefill();
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
@@ -171,6 +173,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+	ON_COMMAND(ID_EDGEFILL, &CAboutDlg::OnEdgefill)
 END_MESSAGE_MAP()
 
 // 用于运行对话框的应用程序命令
@@ -182,5 +185,5 @@ void CGIS_CGApp::OnAppAbout()
 
 // CGIS_CGApp 消息处理程序
 
-
-
+void CAboutDlg::OnEdgefill() {
+}

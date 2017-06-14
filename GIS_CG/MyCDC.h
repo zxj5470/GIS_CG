@@ -23,11 +23,14 @@ public:
 	void setColor(COLORREF c);
 	void setColor(uc r, uc g, uc b);
 
-private:
+	void clearByRectangle(RECT);
+	COLORREF getColor();
 
+private:
 	void draw8Points(int cx, int cy, int x, int y);
 	void draw4Points(int cx, int cy, int x, int y);
 	int toFixed(double number);
+
 private:
 	COLORREF c;
 };

@@ -53,6 +53,12 @@ public:
 	afx_msg void OnDrawcirclemp();
 	afx_msg void OnDrawcirclebre();
 	afx_msg void OnDrawellipse();
+	afx_msg void OnClear();
+	afx_msg void OnClearQuick();
+	afx_msg void OnGraphMove();
+	afx_msg void OnMulCut();
+	afx_msg void OnCutPoly();
+	afx_msg void OnCircleCut();
 };
 
 #ifndef _DEBUG  // GIS_CGView.cpp 中的调试版本

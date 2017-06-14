@@ -145,12 +145,20 @@ BEGIN
         MENUITEM "Ô²(MP)",                       ID_DrawCircleMP
         MENUITEM "Ô²(Bresenham)",                ID_DrawCircleBre
         MENUITEM "ÍÖÔ²(MP)",                      ID_DrawEllipse
+        MENUITEM "Çå¿ÕÍ¼Ïñ(¹ö¶¯Ê½)",                   ID_CLEAR
+        MENUITEM "Çå¿ÕÍ¼Ïñ",                        ID_CLEAR_QUICK
+        MENUITEM "Æ½ÒÆ",                          ID_Graph_MOVE
     END
     POPUP "Ìî³ä(&F)"
     BEGIN
         MENUITEM "Ìî³ä(&F)",                      ID_FILL
         MENUITEM "±ßÔµÌî³ä",                        ID_EDGEFILL
-        MENUITEM "Ñ¡¶¨±ßÔµÑÕÉ«",                      ID_ChooseColorEDGE
+    END
+    POPUP "²Ã¼ô(&C)"
+    BEGIN
+        MENUITEM "Cohen-Sutherland²Ã¼ô",          ID_MUL_CUT
+        MENUITEM "¶à±ßÐÎ²Ã¼ô",                       ID_CUT_POLY
+        MENUITEM "Ô²²Ã¼ô",                         ID_CIRCLE_CUT
     END
     POPUP "°ïÖú(&H)"
     BEGIN

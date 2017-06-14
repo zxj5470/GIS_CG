@@ -75,7 +75,7 @@ void MyCDC::drawCircleMP(int cx, int cy, int r) {
 	float d;
 	int x = 0, y = r;
 	d = 1.25 - r;
-	while (x < y) {
+	while (x <= y) {
 		draw8Points(cx, cy, x, y);
 		if (d < 0) {
 			d += 2 * x + 3;
@@ -94,16 +94,18 @@ void MyCDC::drawCircleBresenham(int cx, int cy, int r) {
 	x = 0;
 	y = r;
 	delta = 2 * (1 - r);
-	while (y >= 0) {
+	SetPixel(cx + r, cy, c);
+	SetPixel(cx - r, cy, c);
+	while (y >0) {
 		draw4Points(cx, cy, x, y);
 		if (delta < 0) {
 			d1 = 2 * (delta + y) - 1;
-			if (d1 <= 0)dir = 1;
+			if (d1 < 0)dir = 1;
 			else dir = 2;
 		}
 		else if (delta > 0) {
 			d2 = 2 * (delta - x) - 1;
-			if (d2 <= 0)dir = 2;
+			if (d2 < 0)dir = 2;
 			else dir = 3;
 		}
 		else {
@@ -215,6 +217,19 @@ void MyCDC::setColor(COLORREF c) {
 void MyCDC::setColor(uc r, uc g, uc b) {
 	c = RGB(r, g, b);
 	setColor(RGB(r, g, b));
+}
+
+void MyCDC::clearByRectangle(RECT r) {
+	COLORREF oldColor=GetBkColor();
+	for (int i = r.left; i < r.right; i++) {
+		for (int j = r.top; j < r.bottom; j++) {
+			SetPixel(i, j, RGB(255, 255, 255));
+		}
+	}
+}
+
+COLORREF MyCDC::getColor() {
+	return this->c;
 }
 
 

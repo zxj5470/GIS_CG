@@ -25,23 +25,42 @@ public:
 	virtual void InitializeSearchContent();
 	virtual void OnDrawThumbnail(CDC& dc, LPRECT lprcBounds);
 #endif // SHARED_HANDLERS
-
+private:
+	int encode(int x, int y);
 // 实现
 public:
 	virtual ~CGIS_CGDoc();
 	void DDALine(CClientDC *DCPoint);
 	void SeedFill(CClientDC *pDC, CPoint seedpoint);
 	void EdgeFill(CClientDC *pDC);
+	void DrawGraph(CClientDC *pDC);
+	void GenerateGraph(CClientDC *pDC);
+
+	void DrawWindow(CClientDC*);
+	void CohenSutherland(CClientDC *pDC, CPoint p1, CPoint p2);
+
+	void PolygonCut(CClientDC *DCPoint);
+	void EdgeClipping(int linecode);
+	void BCircle(CClientDC * DCPoint, CPoint p1, CPoint p2);
+	void BCircle(CClientDC * DCPoint,
+				 CRect* rc,
+				 CPoint p1, CPoint p2);
+	void CircleCut(CClientDC *DCPoint);
+
+
+public:
 
 	CPoint group[100];
 	int PointNum;
+
+
+
 
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-protected:
 
 // 生成的消息映射函数
 protected:

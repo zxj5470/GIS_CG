@@ -36,6 +36,16 @@ void MyCDC::drawLineDDA(int x1, int y1, int x2, int y2) {
 }
 
 void MyCDC::drawLineMP(int x1, int y1, int x2, int y2) {
+	if (x1 > x2) {
+		x1 = x1 + x2;
+		x2 = x1 - x2;//x2=old_x1;
+		x1 = x1 - x2;//x1=old_x2;
+	}
+	if (y1 > y2) {
+		y1 = y1 + y2;
+		y2 = y1 - y2;//y2=old_y1;
+		y2 = y1 - y2;//y1=old_y2;
+	}
 	int x, y, dx, dy, d, d1, d2;
 	dx = x2 - x1;
 	dy = y1 - y2;

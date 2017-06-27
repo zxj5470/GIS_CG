@@ -15,7 +15,7 @@ public:
 protected: // create from serialization only 
 	int MenuID, PressNum, SaveNumber;
 	CPoint mPointOrign, mPointOld, mPointOld1;
-
+private :
 // 操作
 public:
 

@@ -158,7 +158,6 @@ BEGIN
     BEGIN
         MENUITEM "Cohen-Sutherland²Ã¼ô",          ID_MUL_CUT
         MENUITEM "¶à±ßÐÎ²Ã¼ô",                       ID_CUT_POLY
-        MENUITEM "Ô²²Ã¼ô",                         ID_CIRCLE_CUT
     END
     POPUP "°ïÖú(&H)"
     BEGIN

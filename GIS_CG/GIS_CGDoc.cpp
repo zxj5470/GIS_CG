@@ -119,7 +119,7 @@ void CGIS_CGDoc::EdgeFill(CClientDC * pDC) {
 	int i, xr, x1, y1, x2, y2, y;
 	float m, x;
 	CPen pen;
-	pen.CreatePen(PS_SOLID, 1, RGB(0, 254, 254));//确定填充颜色，由该颜色与背景 
+	pen.CreatePen(PS_SOLID, 1, RGB(129, 12, 255));//确定填充颜色，由该颜色与背景 
 												 //色异或混合而成 
 	pDC->SetROP2(R2_XORPEN); //绘图方法为异或 
 	CPen *pOldPen = pDC->SelectObject(&pen);
@@ -161,12 +161,12 @@ void CGIS_CGDoc::DrawGraph(CClientDC * pDC) {
 }
 
 void CGIS_CGDoc::GenerateGraph(CClientDC * pDC) {
-	//group[0].x = 100; group[0].y = 100;//图形数据准备 
-	//group[1].x = 200; group[1].y = 100;
-	//group[2].x = 200; group[2].y = 200;
-	//group[3].x = 100; group[3].y = 200;
-	//group[4].x = 100; group[4].y = 100;
-	//PointNum = 5;
+	group[0].x = 100; group[0].y = 100;//图形数据准备 
+	group[1].x = 200; group[1].y = 100;
+	group[2].x = 200; group[2].y = 200;
+	group[3].x = 100; group[3].y = 200;
+	group[4].x = 100; group[4].y = 100;
+	PointNum = 5;
 	DrawGraph(pDC);
 }
 

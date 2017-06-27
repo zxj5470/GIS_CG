@@ -75,12 +75,12 @@ void CGIS_CGView::OnDraw(CDC* pDC) {
 		return;
 	CDC *dc = GetDC();
 	MyCDC &g = static_cast<MyCDC&>(*dc);
+
 	////add console to "debug"
 	//AllocConsole();                          // 开辟控制台
 	//SetConsoleTitle(_T("Debug Title"));      // 设置控制台窗口标题
 	//FILE* pf;
 	//freopen_s(&pf, "CONOUT$", "w", stdout);
-
 
 	//g.drawCircleBresenham(100, 100, 30);
 	//g.setColor(200, 10, 10);
@@ -136,6 +136,7 @@ CGIS_CGDoc* CGIS_CGView::GetDocument() const // 非调试版本是内联的
 
 
 void CGIS_CGView::OnLButtonDown(UINT nFlags, CPoint point) {
+	if (MenuID == 0)return;
 	CGIS_CGDoc *pDoc = GetDocument(); //获得文档类指针
 	CClientDC ht(this);
 	CDC *dc = GetDC();
@@ -178,7 +179,6 @@ void CGIS_CGView::OnLButtonDown(UINT nFlags, CPoint point) {
 		}
 		else {
 			pDoc->CohenSutherland(&ht, mPointOrign, point);
-			ReleaseCapture();
 			PressNum = 0;
 		}
 	}
@@ -197,38 +197,46 @@ void CGIS_CGView::OnLButtonDown(UINT nFlags, CPoint point) {
 				pDoc->group[i].x += point.x - mPointOrign.x;
 				pDoc->group[i].y += point.y - mPointOrign.y;
 			}
-			//ht.MoveTo(mPointOrign);//擦除橡皮筋
-			//ht.LineTo(point);
 			g.drawLine2PointDDA(mPointOrign, mPointOld);
 			pDoc->DrawGraph(&ht);//生成新图形 
 			PressNum = 0;
 		}
 	}
-	else {
-		switch (MenuID) {
-			case DRAW_LINE_DDA_MODE:case DRAW_LINE_MP_MODE:
-				if (PressNum == 0) {
-					mPointOrign = point;
-					mPointOld = point;
-					mPointOld1 = point; //记录第一点 
-					PressNum++;
-				}
-				else {
+
+	g.setColor(ColorBlack);
+	switch (MenuID) {
+		case DRAW_LINE_DDA_MODE:case DRAW_LINE_MP_MODE:
+			if (PressNum == 0) {
+				mPointOrign = point;
+				mPointOld = point;
+				mPointOld1 = point; //记录第一点 
+				PressNum++;
+			}
+			else {
+				pDoc->group[0] = mPointOrign;
+				pDoc->group[1] = point;
+				if (MenuID == DRAW_LINE_DDA_MODE)g.drawLine2PointDDA(pDoc->group[0], pDoc->group[1]);
+				if (MenuID == DRAW_LINE_MP_MODE)g.drawLineMP(pDoc->group[0].x, pDoc->group[0].y, pDoc->group[1].x, pDoc->group[1].y);
+				mPointOrign = point;
+				mPointOld = point;
+				PressNum = 0;
+			}
+			break;
+		case DRAW_ELLIPSE_MP_MODE:case DRAW_CIRCLE_BRE_MODE:case DRAW_CIRCLE_DDA_MODE:case DRAW_CIRCLE_MP_MODE:
+			if (PressNum == 0) {
+				mPointOrign = point;
+				mPointOld = point;
+				mPointOld1 = point; //记录第一点 
+				PressNum++;
+			}
+			else {
+				if (MenuID == DRAW_ELLIPSE_MP_MODE) {
 					pDoc->group[0] = mPointOrign;
 					pDoc->group[1] = point;
-					if (MenuID == DRAW_LINE_DDA_MODE)g.drawLine2PointDDA(pDoc->group[0], pDoc->group[1]);
-					if (MenuID == DRAW_LINE_MP_MODE)g.drawLine2PointDDA(pDoc->group[0], pDoc->group[1]);
+					g.drawEllipseMP_1(mPointOrign.x, mPointOrign.y, point.x, point.y);
 					mPointOrign = point;
 					mPointOld = point;
 					PressNum = 0;
-				}
-				break;
-			case DRAW_CIRCLE_BRE_MODE:case DRAW_CIRCLE_DDA_MODE:case DRAW_CIRCLE_MP_MODE:
-				if (PressNum == 0) {
-					mPointOrign = point;
-					mPointOld = point;
-					mPointOld1 = point; //记录第一点 
-					PressNum++;
 				}
 				else {
 					pDoc->group[0] = mPointOrign;
@@ -250,19 +258,10 @@ void CGIS_CGView::OnLButtonDown(UINT nFlags, CPoint point) {
 					mPointOld = point;
 					PressNum = 0;
 				}
-				if (PressNum == 1 && MenuID == 33) 					//圆裁剪
-				{
-					pDoc->group[PressNum] = point;
-					PressNum = 0;
-					pDoc->CircleCut(&ht);
-					ReleaseCapture();
-				}
-
-			default:
-				break;
-		}
+			}
+		default:
+			break;
 	}
-
 	ReleaseDC(dc);
 	CView::OnLButtonDown(nFlags, point);
 }
@@ -272,39 +271,84 @@ void CGIS_CGView::OnLButtonDown(UINT nFlags, CPoint point) {
 
 
 void CGIS_CGView::OnMouseMove(UINT nFlags, CPoint point) {
-	CGIS_CGDoc *pDoc = GetDocument(); //获得文档类指针
-	CClientDC pDC(this);
-	CDC *dc = GetDC();
-	MyCDC &g = static_cast<MyCDC&>(*dc);
-	OnPrepareDC(dc);
-	pDC.SetROP2(R2_NOT);
-	g.SetROP2(R2_NOT);
-	if ((MenuID == 1 || MenuID == 11 || MenuID == 15 || MenuID == 20 || MenuID == 22 || MenuID == 24 || MenuID == 25 || MenuID == DRAW_LINE_DDA_MODE || MenuID == DRAW_LINE_MP_MODE)
+	if (MenuID == 0)return;
+	if ((MenuID == 1 || MenuID == 11 || MenuID == 15 || MenuID == 20 || MenuID == 22 || MenuID == 24 || MenuID == 25 || MenuID == DRAW_LINE_DDA_MODE || MenuID == DRAW_LINE_MP_MODE|| MenuID<300)
 		&& PressNum > 0) {
+		CGIS_CGDoc *pDoc = GetDocument(); //获得文档类指针
+		CClientDC pDC(this);
+		CDC *dc = GetDC();
+		MyCDC &g = static_cast<MyCDC&>(*dc);
+		OnPrepareDC(dc);
+		pDC.SetROP2(R2_NOT);
+		g.SetROP2(R2_NOT);
 		if (mPointOld != point) {
-			g.drawLine2PointDDA(mPointOrign, mPointOld);
-			g.drawLine2PointDDA(mPointOrign, point);
-			mPointOld = point;
-		}
-	}
-
-	switch (MenuID) {
-		case DRAW_CIRCLE_BRE_MODE:case DRAW_CIRCLE_DDA_MODE:case DRAW_CIRCLE_MP_MODE:
-			if (mPointOld != point&& PressNum > 0) {
-				g.SelectStockObject(NULL_BRUSH);//画空心圆 
-				double r = (int)sqrt((mPointOrign.x - mPointOld.x)*(mPointOrign.x -
-																	mPointOld.x) + (mPointOrign.y - mPointOld.y)*(mPointOrign.y - mPointOld.y));
-				g.Ellipse(mPointOrign.x - r, mPointOrign.y - r, mPointOrign.x + r, mPointOrign.y + r);//擦旧圆 
-				r = (int)sqrt((mPointOrign.x - point.x)*(mPointOrign.x - point.x)
-							  + (mPointOrign.y - point.y)*(mPointOrign.y - point.y));
-				g.Ellipse(mPointOrign.x - r, mPointOrign.y - r, mPointOrign.x + r, mPointOrign.y + r);//画新圆 
+			if (MenuID == DRAW_LINE_MP_MODE) {
+				g.drawLineMP(mPointOrign.x, mPointOrign.y, mPointOld.x, mPointOld.y);
+				g.drawLineMP(mPointOrign.x, mPointOrign.y, point.x, point.y);
 				mPointOld = point;
 			}
-			break;
-		default:
-			break;
+			else if (MenuID == DRAW_LINE_DDA_MODE) {
+				g.drawLine2PointDDA(mPointOrign, mPointOld);
+				g.drawLine2PointDDA(mPointOrign, point);
+				mPointOld = point;
+			}
+			else if(MenuID<100){
+				g.drawLine2PointDDA(mPointOrign, mPointOld);
+				g.drawLine2PointDDA(mPointOrign, point);
+				mPointOld = point;
+			}
+		}
+
+		switch (MenuID) {
+			case DRAW_CIRCLE_BRE_MODE:
+				if (mPointOld != point&& PressNum > 0) {
+					g.SelectStockObject(NULL_BRUSH);//画空心圆 
+					double r = (int)sqrt((mPointOrign.x - mPointOld.x)*(mPointOrign.x -
+																		mPointOld.x) + (mPointOrign.y - mPointOld.y)*(mPointOrign.y - mPointOld.y));
+					g.drawCircleBresenham(mPointOrign.x, mPointOrign.y, r);
+					r = (int)sqrt((mPointOrign.x - point.x)*(mPointOrign.x - point.x)
+								  + (mPointOrign.y - point.y)*(mPointOrign.y - point.y));
+					g.drawCircleBresenham(mPointOrign.x, mPointOrign.y, r);
+					mPointOld = point;
+				}
+				break;
+			case DRAW_CIRCLE_DDA_MODE:
+				if (mPointOld != point&& PressNum > 0) {
+					g.SelectStockObject(NULL_BRUSH);//画空心圆 
+					double r = (int)sqrt((mPointOrign.x - mPointOld.x)*(mPointOrign.x -
+																		mPointOld.x) + (mPointOrign.y - mPointOld.y)*(mPointOrign.y - mPointOld.y));
+					g.drawCircleDDA(mPointOrign.x, mPointOrign.y, r);
+					r = (int)sqrt((mPointOrign.x - point.x)*(mPointOrign.x - point.x)
+								  + (mPointOrign.y - point.y)*(mPointOrign.y - point.y));
+					g.drawCircleDDA(mPointOrign.x, mPointOrign.y, r);
+					mPointOld = point;
+				}
+				break;
+			case DRAW_CIRCLE_MP_MODE:
+				if (mPointOld != point&& PressNum > 0) {
+					g.SelectStockObject(NULL_BRUSH);//画空心圆 
+					double r = (int)sqrt((mPointOrign.x - mPointOld.x)*(mPointOrign.x -
+																		mPointOld.x) + (mPointOrign.y - mPointOld.y)*(mPointOrign.y - mPointOld.y));
+					g.drawCircleMP(mPointOrign.x, mPointOrign.y, r);
+					r = (int)sqrt((mPointOrign.x - point.x)*(mPointOrign.x - point.x)
+								  + (mPointOrign.y - point.y)*(mPointOrign.y - point.y));
+					g.drawCircleMP(mPointOrign.x, mPointOrign.y, r);
+					mPointOld = point;
+				}
+				break;
+			case DRAW_ELLIPSE_MP_MODE:
+				if (mPointOld != point&& PressNum > 0) {
+					g.SelectStockObject(NULL_BRUSH);//画空心圆 
+					g.drawEllipseMP_1(mPointOrign.x, mPointOrign.y, mPointOld.x, mPointOld.y);
+					g.drawEllipseMP_1(mPointOrign.x, mPointOrign.y, point.x, point.y);
+					mPointOld = point;
+				}
+				break;
+			default:
+				break;
+		}
+		ReleaseDC(dc);
 	}
-	ReleaseDC(dc);
 	CString c;
 	c.Format(L"%d,%d", point.x, point.y);
 	CMainFrame *p = (CMainFrame*)AfxGetMainWnd();
@@ -315,6 +359,7 @@ void CGIS_CGView::OnMouseMove(UINT nFlags, CPoint point) {
 
 
 void CGIS_CGView::OnRButtonDown(UINT nFlags, CPoint point) {
+	if (MenuID == 0)return;
 	CGIS_CGDoc *pDoc = GetDocument(); //获得文档类指针
 	CClientDC ht(this);
 	CDC *dc = GetDC();
@@ -326,11 +371,13 @@ void CGIS_CGView::OnRButtonDown(UINT nFlags, CPoint point) {
 		pDoc->group[0] = mPointOld1;//封闭多边形
 		pDoc->group[1] = mPointOrign;
 		g.drawLineMP(pDoc->group[0].x, pDoc->group[0].y, pDoc->group[1].x, pDoc->group[1].y);
-		PressNum = 0; MenuID = 21;//改变操作方式为种子点选取
+		PressNum = 0;
+		MenuID = 21;//改变操作方式为种子点选取
 	}
 	else if (MenuID == 22) { // 边缘填充选点结束 
 		g.SetROP2(R2_COPYPEN);
-		pDoc->group[PressNum] = pDoc->group[0]; pDoc->PointNum++;
+		pDoc->group[PressNum] = pDoc->group[0]; 
+		pDoc->PointNum++;
 		//ht.MoveTo(pDoc->group[PressNum - 1]);
 		g.drawLine2PointDDA(pDoc->group[PressNum - 1], pDoc->group[0]);
 		//ht.LineTo(pDoc->group[0]);
@@ -339,7 +386,7 @@ void CGIS_CGView::OnRButtonDown(UINT nFlags, CPoint point) {
 			g.drawLine2PointDDA(pDoc->group[i], pDoc->group[i + 1]);
 		pDoc->EdgeFill(&ht);
 		PressNum = 0;
-		//pDoc->PointNum = 0;
+		pDoc->PointNum = 0;
 	}
 	else if (MenuID == 25) { // 多边形裁剪 
 		pDoc->group[PressNum] = pDoc->group[0];//将第一个顶点作为最后一个顶点 
@@ -347,7 +394,6 @@ void CGIS_CGView::OnRButtonDown(UINT nFlags, CPoint point) {
 		ht.MoveTo(pDoc->group[PressNum - 1]); ht.LineTo(pDoc->group[0]);
 		pDoc->PolygonCut(&ht);
 		PressNum = 0; pDoc->PointNum = 0;
-		ReleaseCapture();
 	}
 
 	else if (MenuID >= 100) {
@@ -361,20 +407,24 @@ void CGIS_CGView::OnRButtonDown(UINT nFlags, CPoint point) {
 }
 
 void CGIS_CGView::OnFill() {
-	PressNum = 0; MenuID = 20;
+	PressNum = 0; 
+	MenuID = 20;
 }
 
 void CGIS_CGView::OnEdgefill() {
+	PressNum = 0;
 	MenuID = 22;
 }
 
 
 void CGIS_CGView::OnDrawlinedda() {
+	PressNum = 0;
 	MenuID = DRAW_LINE_DDA_MODE;
 }
 
 
 void CGIS_CGView::OnDrawlinemp() {
+	PressNum = 0;
 	MenuID = DRAW_LINE_MP_MODE;
 }
 
